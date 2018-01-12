@@ -40,7 +40,7 @@ scores = cross_val_score(dt_informationgain, features, target, cv=7)
 print("Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
 
 # Safe tree in graphviz form
-dotfile = open("tree.dot", 'w+')
+dotfile = open("DT/tree.dot", 'w+')
 tree.export_graphviz(dt_informationgain, out_file = dotfile, feature_names = features.columns.values)
 dotfile.close()
 
