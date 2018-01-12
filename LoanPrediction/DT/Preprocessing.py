@@ -1,16 +1,15 @@
 from sklearn import preprocessing
 import pandas as pd
 
-def process(data):
-    # Not relevant for prediction so dropped
-    data = data.drop('Loan_ID', 1)
-
+def process_nan(data):
     # Handle NAN
     data = data.fillna({"Dependents": "0",
-                                    "Married": "No",
-                                    "Credit_History": round(data['Credit_History'].mean())})
+                        "Married": "No",
+                        "Credit_History": round(data['Credit_History'].median()),
+                        "LoanAmount": data['LoanAmount'].median(),
+                        "Loan_Amount_Term": data["Loan_Amount_Term"].median()})
 
-    data = data.dropna(axis=0)
+    #data = data.dropna(axis=0)
     return data
 
 def label_encode(data, columns):

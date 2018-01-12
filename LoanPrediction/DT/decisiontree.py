@@ -13,7 +13,8 @@ SimpleDataExploration.explore_csv('../data/Loans/train.csv')
 
 train_data = pd.read_csv('../data/Loans/train.csv', sep=",", header='infer')
 # Drop columns/Deal with NaN
-train_data = preproc.process(train_data)
+train_data = train_data.drop(["Loan_ID"], axis=1)
+train_data = preproc.process_nan(train_data)
 
 # Sklearn accepts only pure numerical data when dealing with Decision Trees
 # Before one hot encoding, label encode the Dependent column, as this is ordinal
@@ -51,11 +52,13 @@ from LoanPrediction import SolveTest
 #preprocess same as training data
 test_data = pd.read_csv('../data/Loans/test.csv', sep=",", header='infer')
 test_data_ids = test_data['Loan_ID']
-test_data = preproc.process(test_data)
+test_data = preproc.process_nan(test_data)
+test_data_ids_afterdrop = test_data['Loan_ID']
+test_data = test_data.drop(['Loan_ID'], axis=1)
 test_data = preproc.label_encode(test_data, columns=['Dependents'])
 test_data = pd.get_dummies(test_data, columns=["Gender", "Married", "Education",
-                                             "Self_Employed", "Property_Area"])
+                                               "Self_Employed", "Property_Area"])
 
 
-SolveTest.solve(dt_informationgain, test_data, ids=test_data_ids)
+SolveTest.solve(dt_informationgain, test_data, ids_original=test_data_ids, ids_processed=test_data_ids_afterdrop)
 
