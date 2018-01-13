@@ -1,12 +1,12 @@
-def solve(model, testdata, ids_original=[], ids_processed=[], write=True):
+def solve(model, testdata, ids=[], outfile="solutions.csv"):
     predictions = model.predict(testdata)
 
     write_seq = ["Loan_ID,Loan_Status\n"]
     for i, prediction in enumerate(predictions):
-        line = str(ids_processed.values[i]+","+_map_prediction(prediction))+"\n"
+        line = str(ids.values[i]+","+_map_prediction(prediction))+"\n"
         write_seq.append(line)
 
-    with open("solutions.csv", 'w+') as fh:
+    with open(outfile, 'w+') as fh:
         fh.writelines(write_seq)
         fh.close()
 

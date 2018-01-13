@@ -1,7 +1,8 @@
 from sklearn import preprocessing
 import pandas as pd
 
-def process_nan(data):
+def process(data):
+    data = data.drop(["Loan_ID"], axis=1)
     # Handle NAN
     data = data.fillna({"Dependents": "0",
                         "Married": "No",
