@@ -1,10 +1,10 @@
-from LoanPrediction import SolveTest
 import pandas as pd
-from RandomForest import RandomForest
-from LoanPrediction.DT.DecisionTree import SimpleDecisionTree
 
-import LoanPrediction.DT.Preprocessing as preproc
+import LoanPrediction.Preprocessing as preproc
 import SimpleDataExploration
+from LoanPrediction import SolveTest
+from LoanPrediction.DecisionTreeBased.DecisionTree import SimpleDecisionTree
+from RandomForest import RandomForest
 
 # Explore data, printing some information
 SimpleDataExploration.explore_csv('../data/Loans/train.csv')
@@ -13,7 +13,7 @@ train_data = pd.read_csv('../data/Loans/train.csv', sep=",", header='infer')
 # Drop columns/Deal with NaN
 train_data = preproc.process(train_data)
 
-# Sklearn accepts only pure numerical data when dealing with Decision Trees
+# Sklearn accepts only pure numerical data
 # Before one hot encoding, label encode the Dependent column, as this is ordinal
 # (therefore sklean can see this as continuous)
 preproc.label_encode(train_data, columns=['Dependents'])

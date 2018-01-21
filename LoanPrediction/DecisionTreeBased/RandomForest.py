@@ -1,5 +1,5 @@
 from sklearn.ensemble import RandomForestClassifier
-from LoanPrediction.DT.DecisionTree import DecisionTree
+from LoanPrediction.DecisionTreeBased.DecisionTree import DecisionTree
 
 class RandomForest(DecisionTree):
 
