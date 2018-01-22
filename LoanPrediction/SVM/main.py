@@ -20,12 +20,6 @@ features = train_data.drop('Loan_Status', 1)
 # One hot encode categorical data
 features = pd.get_dummies(features, columns=["Gender", "Married", "Education",
                                              "Self_Employed", "Property_Area"])
-# Target
-#  N Y
-# 0 1 0
-# 1 1 0
-#target = pd.get_dummies(target)
-print(target.head(3))
 
 #target = np.argmax(target, axis=1)
 

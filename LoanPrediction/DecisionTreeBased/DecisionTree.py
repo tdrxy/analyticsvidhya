@@ -8,7 +8,7 @@ class DecisionTree:
     @staticmethod
     def _write_tree(model, features):
         # Save tree in graphviz form
-        dotfile = open("DT/tree.dot", 'w+')
+        dotfile = open("tree.dot", 'w+')
         tree.export_graphviz(model, out_file=dotfile,
                              feature_names=features.columns.values)
         dotfile.close()

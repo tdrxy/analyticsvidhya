@@ -1,13 +1,8 @@
 import pandas as pd
-
 import LoanPrediction.Preprocessing as preproc
-import SimpleDataExploration
+import numpy as np
+from XGBooster import XGBooster
 from LoanPrediction import SolveTest
-from LoanPrediction.DecisionTreeBased.DecisionTree import SimpleDecisionTree
-from RandomForest import RandomForest
-
-# Explore data, printing some information
-SimpleDataExploration.explore_csv('../data/Loans/train.csv')
 
 train_data = pd.read_csv('../data/Loans/train.csv', sep=",", header='infer')
 # Drop columns/Deal with NaN
@@ -26,17 +21,8 @@ features = train_data.drop('Loan_Status', 1)
 # One hot encode categorical data
 features = pd.get_dummies(features, columns=["Gender", "Married", "Education",
                                              "Self_Employed", "Property_Area"])
-# Target
-#  N Y
-# 0 1 0
-# 1 1 0
-target = pd.get_dummies(target)
 
-print("Simple Decision Tree: ")
-simple_dt = SimpleDecisionTree().work(features, target)
-
-print("Random Forest: ")
-forest = RandomForest().work(features, target)
+model = XGBooster().work(features, target, n_estimators=100, learning_rate=0.05)
 
 #preprocess same as training data
 test_data = pd.read_csv('../data/Loans/test.csv', sep=",", header='infer')
@@ -47,5 +33,4 @@ test_data = pd.get_dummies(test_data, columns=["Gender", "Married", "Education",
                                                "Self_Employed", "Property_Area"])
 
 
-SolveTest.solve(simple_dt, test_data, ids=data_ids, outfile="simple_solutions.csv")
-SolveTest.solve(forest, test_data, ids=data_ids, outfile="rf_solutions.csv")
+SolveTest.solve(model, test_data, ids=data_ids, outfile="xgb_solutions.csv")
